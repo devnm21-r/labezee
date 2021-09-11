@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { db } from '../../services/firebase';
 
 const LabSession = (): React.FC => {
+  // @ts-ignore
   const [labData, setLabData] = useState({});
 
   const fetchLabDetails = async (labSessionId) => {
