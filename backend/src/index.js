@@ -3,6 +3,7 @@ import express from 'express';
 import * as admin from 'firebase-admin';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import axios from 'axios';
 
 admin.initializeApp({
 	projectId: 'labez-f769c',
@@ -41,6 +42,28 @@ app.post('/v1/signup', async (req, res) => {
 	    res.status(500).send(e.message)
 	}
 
+});
+
+app.post('/v1/rooms', async (req, res) => {
+	try {
+		const { name } = req.body;
+		const roomAPIRes = await axios.post('https://api.daily.co/v1/rooms/', {
+			name,
+			privacy: 'public',
+			properties: {
+				start_video_off: true,
+				start_audio_off: true,
+			}
+		}, {
+			headers: {
+				Authorization: `Bearer ${process.env.DAILY_TOKEN}`
+			}
+		});
+		return res.json(roomAPIRes.data);
+	} catch (e) {
+		console.log(e);
+		res.status(500).send(e.message)
+	}
 });
 
 app.listen(8008, () => {
