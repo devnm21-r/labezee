@@ -5,8 +5,8 @@ import icon from '../../assets/icon.svg';
 import './App.global.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import Auth from './pages/Auth';
-import Main from './pages/Main';
-import LabSession from './pages/LabSession';
+import LabSession from './components/App/App';
+import Home from './pages/Main';
 
 export default function App() {
   return (
@@ -14,7 +14,7 @@ export default function App() {
       <Switch>
         <Route path="/auth" component={Auth} />
         <Route path="/lab-session" component={LabSession} />
-        <Route path="/" component={Main} />
+        <Route path="/" component={Home} />
       </Switch>
     </Router>
   );

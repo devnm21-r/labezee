@@ -10,9 +10,9 @@ interface Option {
 }
 
 const camelize = (str: string) =>
-  str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_m, chr) => chr.toUpperCase());
-
-
+  str
+    .toLowerCase()
+    .replace(/[^a-zA-Z0-9]+(.)/g, (_m, chr) => chr.toUpperCase());
 
 const NammaInput = ({
   onChange,
@@ -27,7 +27,14 @@ const NammaInput = ({
   value: string;
   options?: Option[];
 }) => {
-  const props = { onChange, type, name: camelize(label), placeholder: label, value, options };
+  const props = {
+    onChange,
+    type,
+    name: camelize(label),
+    placeholder: label,
+    value,
+    options,
+  };
   // @ts-ignore
   return (
     <FormGroup row>
@@ -36,25 +43,27 @@ const NammaInput = ({
         {label.slice(1)}
       </Label>
       <Col sm={12}>
-        {
-          type === 'select' ?
-            <Input
-              // @ts-ignore
-              {...props}>
-              {options &&
+        {type === 'select' ? (
+          <Input
+            // @ts-ignore
+            {...props}
+          >
+            {options &&
               options.length &&
-              options.length > 0
-              && options.map((option, i) =>
-                <option
-                  defaultChecked={i === 0}
-                  value={option.value}> {option.label} </option>
-              )
-              }
-            </Input> :
-            <Input
-              // @ts-ignore
-              {...props} />
-        }
+              options.length > 0 &&
+              options.map((option, i) => (
+                <option defaultChecked={i === 0} value={option.value}>
+                  {' '}
+                  {option.label}{' '}
+                </option>
+              ))}
+          </Input>
+        ) : (
+          <Input
+            // @ts-ignore
+            {...props}
+          />
+        )}
       </Col>
     </FormGroup>
   );

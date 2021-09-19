@@ -34,7 +34,10 @@ app.post('/v1/signup', async (req, res) => {
 			teacher: role === 'teacher'
 		});
 		const token = await admin.auth().createCustomToken(user.uid)
-
+		await admin.database().ref(`/users/${user.uid}`).set({
+			displayName: user.displayName,
+			role,
+		})
 		return res.json({
 			token,
 		})
@@ -48,7 +51,7 @@ app.post('/v1/rooms', async (req, res) => {
 	try {
 		const { name } = req.body;
 		const roomAPIRes = await axios.post('https://api.daily.co/v1/rooms/', {
-			name,
+			name: name.replace(/\s+/g, '-'),
 			privacy: 'public',
 			properties: {
 				start_video_off: true,
@@ -65,6 +68,24 @@ app.post('/v1/rooms', async (req, res) => {
 		res.status(500).send(e.message)
 	}
 });
+
+app.post('/v1/execute-script', async (req, res) => {
+	try {
+		let { language, script, stdin = '' } = req.body;
+		const program = {
+			language,
+			script,
+			stdin,
+			versionIndex: '0',
+			clientId: process.env.JDOODLE_CLIENT_ID,
+			clientSecret: process.env.JDOODLE_CLIENT_SECRET,
+		};
+		const execAPIRes = await axios.post('https://api.jdoodle.com/v1/execute', program);
+		return res.json(execAPIRes.data);
+	} catch (e) {
+		res.status(500).send(e.message)
+	}
+})
 
 app.listen(8008, () => {
 	console.log('listenting?');

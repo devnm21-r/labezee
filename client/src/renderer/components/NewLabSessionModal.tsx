@@ -2,7 +2,7 @@ import React,  { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, Button, Card, CardTitle, CardBody } from 'reactstrap';
 import NammaInput from './NammaInput';
 
-const NewLabSessionModal = ({ isOpen, toggle, onSubmit, clear }: { clear: () => void; }) => {
+const NewLabSessionModal = ({ isOpen, toggle, onSubmit }: { isOpen: boolean, toggle: () => void, onSubmit: () => void }) => {
 
   const [statementsCount, setStatementsCount] = useState(1);
   const [problemStatements, setProblemStatements] = useState({});
@@ -39,7 +39,7 @@ const NewLabSessionModal = ({ isOpen, toggle, onSubmit, clear }: { clear: () => 
   // @ts-ignore
   return (
     <>
-      <Modal isOpen={isOpen}>
+      <Modal size={'lg'} isOpen={isOpen}>
         <ModalHeader>Create New Lab Session</ModalHeader>
         <ModalBody>
 

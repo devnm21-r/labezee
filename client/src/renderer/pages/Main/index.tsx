@@ -38,7 +38,16 @@ const Main = () => {
   return (
     <>
       <Navbar />
-      {user.teacher ? <TeacherMain /> : <StudentMain />}
+      <div style={{ position: 'relative', height: '87h' }} >
+        {user.teacher ? <TeacherMain /> : <StudentMain />}
+        <img style={{
+          position: 'absolute',
+          left: '25%',
+          bottom: user.teacher ? '100px': '0',
+          zIndex: -1,
+          opacity: '90%'
+        }} src={'https://shapeai-uploads.s3.ap-south-1.amazonaws.com/undraw_coding.png'} />
+      </div>
     </>
   );
 };
