@@ -76,9 +76,9 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
-    alwaysOnTop: true,
+    width: 2045,
+    height: 1024,
+//    alwaysOnTop: true,
     minimizable: false,
     simpleFullscreen: true,
     icon: getAssetPath('icon.png'),
